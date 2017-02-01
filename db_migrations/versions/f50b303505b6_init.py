@@ -1,7 +1,8 @@
 """init
 
-Revision ID: 60aaffdaf70e
-Create Date: 2017-01-31 18:01:30.689422
+Revision ID: f50b303505b6
+Revises: 
+Create Date: 2017-02-01 18:50:34.943586
 
 """
 from alembic import op
@@ -9,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '60aaffdaf70e'
+revision = 'f50b303505b6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -77,8 +78,8 @@ def upgrade():
     sa.Column('provider_id', sa.VARCHAR(length=50), nullable=False),
     sa.Column('start_date', sa.TIMESTAMP(), nullable=False),
     sa.Column('patient_num', sa.INTEGER(), nullable=False),
-    sa.Column('modifier_cd', sa.CHAR(length=50), nullable=False),
-    sa.Column('instance_num', sa.INTEGER(), nullable=False),
+    sa.Column('modifier_cd', sa.CHAR(length=50), server_default='@', nullable=False),
+    sa.Column('instance_num', sa.INTEGER(), server_default='1', nullable=False),
     sa.Column('valtype_cd', sa.CHAR(length=50), nullable=True),
     sa.Column('tval_char', sa.VARCHAR(length=255), nullable=True),
     sa.Column('nval_num', sa.DECIMAL(precision=18, scale=5), nullable=True),
