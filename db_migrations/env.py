@@ -1,19 +1,24 @@
 from __future__ import with_statement
-from alembic import context
-from sqlalchemy import engine_from_config, pool
-from logging.config import fileConfig
-from alembic.config import Config
 
-import os
 import sys
+import os
+
+from logging.config import fileConfig
+
+from sqlalchemy import engine_from_config, pool
 
 PROJECT_FOLDER = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
-sys.path.append(PROJECT_FOLDER)
-import i2b2_schema
+
+from alembic import context
+from alembic.config import Config
 
 config = Config(PROJECT_FOLDER+"/alembic.ini")
+sys.path.append(PROJECT_FOLDER)
+from i2b2_schema import Base
+
 fileConfig(config.config_file_name)
-target_metadata = i2b2_schema.Base.metadata
+
+target_metadata = Base.metadata
 
 
 def run_migrations_offline():
@@ -30,7 +35,7 @@ def run_migrations_offline():
     """
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
-        url=url, target_metadata=target_metadata, literal_binds=True)
+        url=url, target_metadata=target_metadata, literal_binds=True, compare_type=True)
 
     with context.begin_transaction():
         context.run_migrations()
@@ -51,7 +56,8 @@ def run_migrations_online():
     with connectable.connect() as connection:
         context.configure(
             connection=connection,
-            target_metadata=target_metadata
+            target_metadata=target_metadata,
+            compare_type=True
         )
 
         with context.begin_transaction():
