@@ -8,3 +8,20 @@
 This is an implementation of the I2B2 star schema using Python, Alembic, Psycopg2 and PostgreSQL.
 The goal of this project is to be able to easily use the I2B2 DB in a Python environement and
 to make it easy to create schema migrations.
+
+## Prerequisites
+
+* Python 3.5
+* Psycopg
+* Alembic
+* A running instance of PostgreSQL on localhost:5432
+
+## Create/Migrate tables
+
+Run `alembic upgrade head`.
+
+## Test
+
+Open the tests directory and run `./test.sh`.
+
+NOTE: You need a postgreSQL instance running on localhost:5432 (otherwise you can adapt the alembic.ini file).
