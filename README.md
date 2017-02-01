@@ -1,5 +1,6 @@
 [![CircleCI](https://circleci.com/gh/LREN-CHUV/i2b2-db.svg?style=svg)](https://circleci.com/gh/LREN-CHUV/i2b2-db)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b26a4201f7704c54a1aefbd823cf37ab)](https://www.codacy.com/app/mirco-nasuti/i2b2-db?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LREN-CHUV/i2b2-db&amp;utm_campaign=Badge_Grade)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/LREN-CHUV/i2b2-db/blob/master/LICENSE)
 
 # I2B2 DB
 
