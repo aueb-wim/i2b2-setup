@@ -25,4 +25,6 @@ Run `alembic upgrade head`.
 
 Open the tests directory and run `./test.sh`.
 
-NOTE: You need a postgreSQL instance running on localhost:5432 (otherwise you can adapt the alembic.ini file).
+NOTE: This will launch a Docker container with a Postgres instance on the port 5432. On CircleCI,
+it does not launch a Docker container but connects to a local Postgres instance. If you don't want to
+use Docker, you can define this environment variable: `CIRCLE_CI=True`
