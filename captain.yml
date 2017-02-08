@@ -1,0 +1,7 @@
+i2b2-db:
+  build: Dockerfile
+  image: hbpmip/i2b2-db
+  pre:
+    - echo "Building hbpmip/i2b2-db image"
+  post:
+    - echo "Finished building hbpmip/i2b2-db image"
