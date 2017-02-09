@@ -10,10 +10,12 @@ sleep 5
 out=$(docker exec -ti ${db_docker_id} bash -c "psql -U postgres -c \"\dt\" | grep alembic_version")
 ret=${#out}
 
-# Remove DB container
-echo "Removing DB container..."
-docker kill ${db_docker_id}
-docker rm -f ${db_docker_id}
+# Remove DB container (if not in CircleCI)
+if [ -z "$CIRCLECI" ] || [ "$CIRCLECI" = false ] ; then
+    echo "Removing DB container..."
+    docker kill ${db_docker_id}
+    docker rm -f ${db_docker_id}
+fi
 
 if [ $ret -eq 48 ]
 then
