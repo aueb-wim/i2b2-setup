@@ -7,7 +7,13 @@ db_docker_id=$(docker run -d hbpmip/i2b2-db)
 # Query database
 echo "Waiting for the DB to be ready..."
 sleep 5
-out=$(docker exec -ti ${db_docker_id} bash -c "psql -U postgres -c \"\dt\" | grep alembic_version")
+
+# For the moment, CircleCI still uses the LXC driver
+if [ -z "$CIRCLECI" ] || [ "$CIRCLECI" = false ] ; then
+  out=$(docker exec -ti ${db_docker_id} bash -c "psql -U postgres -c \"\dt\" | grep alembic_version")
+else
+  out=$(sudo lxc-attach -n "$(docker inspect --format "{{.Id}}" ${db_docker_id})" -- bash -c "psql -U postgres -c \"\dt\" | grep alembic_version")
+fi
 ret=${#out}
 
 # Remove DB container (if not in CircleCI)
