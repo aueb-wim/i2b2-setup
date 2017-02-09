@@ -9,5 +9,6 @@ COPY db_migrations/ /db_migrations/
 COPY migrate.sh /docker-entrypoint-initdb.d/
 
 RUN apt-get update
-RUN apt-get install -y 'python3' 'python3-pip' 'postgresql-server-dev-9.6'
+RUN apt-get install -y --no-install-recommends 'python3' 'python3-pip' 'postgresql-server-dev-9.6'
+RUN rm /var/lib/apt/lists/*
 RUN pip3 install 'alembic' 'psycopg2'
