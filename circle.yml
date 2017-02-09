@@ -1,10 +1,9 @@
 machine:
-  services:
-    - docker
-dependencies:
-  override:
-    - docker info
-    - docker build -t hbpmip/i2b2-db .
+  python:
+    version: 3.5.2
 test:
+  pre:
+    - pip install alembic
+    - pip install psycopg2
   override:
-    - ./tests/test.sh
+    - cd ./tests && ./test.sh
