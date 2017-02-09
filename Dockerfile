@@ -14,7 +14,7 @@ RUN apt-get update \
         'python3-dev=3.4.2-2' \
         'python3-pip=1.5.6-5' \
         'build-essential=11.7' \
-        'postgresql-server-dev-9.6=9.6.1-2.pgdg80+1'\
+        'postgresql-server-dev-9.6=9.6.2-1.pgdg80+1' \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install 'alembic==0.8.10' 'psycopg2==2.6.2'
