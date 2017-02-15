@@ -6,7 +6,7 @@
 
 ## Introduction
 
-The goal of this project is to provoide a Docker container including Alembic and a Python model of the I2B2 schema.
+The goal of this project is to provide a Docker container including Alembic and a Python model of the I2B2 schema.
 
 ## Usage
 
