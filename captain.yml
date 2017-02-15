@@ -1,9 +1,9 @@
-i2b2-db:
+i2b2-setup:
   build: Dockerfile
-  image: hbpmip/i2b2-db
+  image: hbpmip/i2b2-setup
   pre:
-    - echo "Building hbpmip/i2b2-db image"
+    - echo "Building hbpmip/i2b2-setup image"
   post:
-    - echo "Finished building hbpmip/i2b2-db image"
+    - echo "Finished building hbpmip/i2b2-setup image"
   test:
-    - ./tests/test.sh
+    - cd tests && ./test.sh
