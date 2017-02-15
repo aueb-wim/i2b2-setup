@@ -26,7 +26,7 @@ else
   CAPTAIN="sudo captain"
 fi
 
-$CAPTAIN push --branch-tags=false --commit-tags=true i2b2-db
+$CAPTAIN push --branch-tags=false --commit-tags=true i2b2-setup
 sed "s/USER/${USER^}/" $WORKSPACE/slack.json > $WORKSPACE/.slack.json
 curl -k -X POST --data-urlencode payload@$WORKSPACE/.slack.json https://hbps1.chuv.ch/slack/dev-activity
 rm -f $WORKSPACE/.slack.json
