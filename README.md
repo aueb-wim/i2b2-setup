@@ -1,30 +1,26 @@
-[![CircleCI](https://circleci.com/gh/LREN-CHUV/i2b2-db.svg?style=svg)](https://circleci.com/gh/LREN-CHUV/i2b2-db)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b26a4201f7704c54a1aefbd823cf37ab)](https://www.codacy.com/app/mirco-nasuti/i2b2-db?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LREN-CHUV/i2b2-db&amp;utm_campaign=Badge_Grade)
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/LREN-CHUV/i2b2-db/blob/master/LICENSE)
+[![CircleCI](https://circleci.com/gh/LREN-CHUV/i2b2-setup.svg?style=svg)](https://circleci.com/gh/LREN-CHUV/i2b2-setup)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b26a4201f7704c54a1aefbd823cf37ab)](https://www.codacy.com/app/mirco-nasuti/i2b2-setup?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LREN-CHUV/i2b2-setup&amp;utm_campaign=Badge_Grade)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/LREN-CHUV/i2b2-setup/blob/master/LICENSE)
 
-# I2B2 DB
+# I2B2 SETUP
 
 ## Introduction
 
-This is an implementation of the I2B2 star schema using Python, Alembic, Psycopg2 and PostgreSQL.
-The goal of this project is to be able to easily use the I2B2 DB in a Python environement and
-to make it easy to create schema migrations.
+The goal of this project is to provoide a Docker container including Alembic and a Python model of the I2B2 schema.
 
-## Prerequisites
+## Usage
 
-* Python 3.5
-* Psycopg
-* Alembic
-* A running instance of PostgreSQL on localhost:5432
+Example: 
+`docker run --rm -e "DB_URL=postgresql://postgres:postgres@localhost:5432/postgres" hbpmip/i2b2-setup upgrade head`
 
-## Create/Migrate tables
+## Build
 
-Run `alembic upgrade head`.
+Run: `build.sh`
 
 ## Test
 
-Open the tests directory and run `./test.sh`.
+Run: `cd tests && ./test.sh`
 
-NOTE: This will launch a Docker container with a Postgres instance on the port 5432. On CircleCI,
-it does not launch a Docker container but connects to a local Postgres instance. If you don't want to
-use Docker, you can define this environment variable: `CIRCLE_CI=True`
+## Push on Docker Hub
+
+Run: `./docker_push.sh`
