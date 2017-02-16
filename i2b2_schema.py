@@ -7,7 +7,7 @@ For more information, you can refer to this document:
 https://www.i2b2.org/software/files/PDF/current/CRC_Design.pdf
 """
 
-from sqlalchemy import Column, Index, Sequence, INTEGER, TEXT, DECIMAL, TIMESTAMP, VARCHAR
+from sqlalchemy import Column, Index, INTEGER, TEXT, DECIMAL, TIMESTAMP, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 
 
