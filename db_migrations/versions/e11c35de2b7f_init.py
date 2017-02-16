@@ -1,7 +1,7 @@
 """init
 
-Revision ID: f50b303505b6
-Create Date: 2017-02-01 18:50:34.943586
+Revision ID: e11c35de2b7f
+Create Date: 2017-02-16 10:09:21.054446
 
 """
 from alembic import op
@@ -9,7 +9,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f50b303505b6'
+revision = 'e11c35de2b7f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,6 +31,8 @@ def upgrade():
     sa.Column('upload_id', sa.INTEGER(), nullable=True),
     sa.PrimaryKeyConstraint('table_cd', 'column_cd', 'code_cd')
     )
+    op.create_index(op.f('ix_code_lookup_name_char'), 'code_lookup', ['name_char'], unique=False)
+    op.create_index(op.f('ix_code_lookup_upload_id'), 'code_lookup', ['upload_id'], unique=False)
     op.create_table('concept_dimension',
     sa.Column('concept_path', sa.VARCHAR(length=700), nullable=False),
     sa.Column('concept_cd', sa.VARCHAR(length=50), nullable=True),
@@ -43,6 +45,7 @@ def upgrade():
     sa.Column('upload_id', sa.INTEGER(), nullable=True),
     sa.PrimaryKeyConstraint('concept_path')
     )
+    op.create_index(op.f('ix_concept_dimension_upload_id'), 'concept_dimension', ['upload_id'], unique=False)
     op.create_table('encounter_mapping',
     sa.Column('encounter_ide', sa.VARCHAR(length=200), nullable=False),
     sa.Column('encounter_ide_source', sa.VARCHAR(length=50), nullable=False),
@@ -59,9 +62,11 @@ def upgrade():
     sa.Column('upload_id', sa.INTEGER(), nullable=True),
     sa.PrimaryKeyConstraint('encounter_ide', 'encounter_ide_source', 'project_id', 'patient_ide', 'patient_ide_source')
     )
+    op.create_index(op.f('ix_encounter_mapping_encounter_num'), 'encounter_mapping', ['encounter_num'], unique=False)
+    op.create_index(op.f('ix_encounter_mapping_upload_id'), 'encounter_mapping', ['upload_id'], unique=False)
     op.create_table('modifier_dimension',
-    sa.Column('concept_path', sa.VARCHAR(length=700), nullable=False),
-    sa.Column('concept_cd', sa.VARCHAR(length=50), nullable=True),
+    sa.Column('modifier_path', sa.VARCHAR(length=700), nullable=False),
+    sa.Column('modifier_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('name_char', sa.VARCHAR(length=2000), nullable=True),
     sa.Column('modifier_blob', sa.TEXT(), nullable=True),
     sa.Column('update_date', sa.TIMESTAMP(), nullable=True),
@@ -69,20 +74,21 @@ def upgrade():
     sa.Column('import_date', sa.TIMESTAMP(), nullable=True),
     sa.Column('sourcesystem_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('upload_id', sa.INTEGER(), nullable=True),
-    sa.PrimaryKeyConstraint('concept_path')
+    sa.PrimaryKeyConstraint('modifier_path')
     )
+    op.create_index(op.f('ix_modifier_dimension_upload_id'), 'modifier_dimension', ['upload_id'], unique=False)
     op.create_table('observation_fact',
     sa.Column('encounter_num', sa.INTEGER(), nullable=False),
     sa.Column('concept_cd', sa.VARCHAR(length=50), nullable=False),
     sa.Column('provider_id', sa.VARCHAR(length=50), nullable=False),
     sa.Column('start_date', sa.TIMESTAMP(), nullable=False),
     sa.Column('patient_num', sa.INTEGER(), nullable=False),
-    sa.Column('modifier_cd', sa.CHAR(length=50), server_default='@', nullable=False),
+    sa.Column('modifier_cd', sa.VARCHAR(length=50), server_default='@', nullable=False),
     sa.Column('instance_num', sa.INTEGER(), server_default='1', nullable=False),
-    sa.Column('valtype_cd', sa.CHAR(length=50), nullable=True),
+    sa.Column('valtype_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('tval_char', sa.VARCHAR(length=255), nullable=True),
     sa.Column('nval_num', sa.DECIMAL(precision=18, scale=5), nullable=True),
-    sa.Column('valueflag_cd', sa.CHAR(length=50), nullable=True),
+    sa.Column('valueflag_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('quantity_num', sa.DECIMAL(precision=18, scale=5), nullable=True),
     sa.Column('units_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('end_date', sa.TIMESTAMP(), nullable=True),
@@ -97,11 +103,11 @@ def upgrade():
     sa.PrimaryKeyConstraint('encounter_num', 'concept_cd', 'provider_id', 'start_date', 'patient_num', 'modifier_cd', 'instance_num')
     )
     op.create_table('patient_dimension',
-    sa.Column('patient_num', sa.INTEGER(), nullable=False),
+    sa.Column('patient_num', sa.INTEGER(), autoincrement=False, nullable=False),
     sa.Column('vital_status_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('birth_date', sa.TIMESTAMP(), nullable=True),
     sa.Column('death_date', sa.TIMESTAMP(), nullable=True),
-    sa.Column('sex_cd', sa.CHAR(length=50), nullable=True),
+    sa.Column('sex_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('age_in_years_num', sa.INTEGER(), nullable=True),
     sa.Column('language_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('race_cd', sa.VARCHAR(length=50), nullable=True),
@@ -118,6 +124,7 @@ def upgrade():
     sa.Column('upload_id', sa.INTEGER(), nullable=True),
     sa.PrimaryKeyConstraint('patient_num')
     )
+    op.create_index(op.f('ix_patient_dimension_upload_id'), 'patient_dimension', ['upload_id'], unique=False)
     op.create_table('patient_mapping',
     sa.Column('patient_ide', sa.VARCHAR(length=200), nullable=False),
     sa.Column('patient_ide_source', sa.VARCHAR(length=50), nullable=False),
@@ -145,16 +152,17 @@ def upgrade():
     sa.Column('upload_id', sa.INTEGER(), nullable=True),
     sa.PrimaryKeyConstraint('provider_id', 'provider_path')
     )
+    op.create_index(op.f('ix_provider_dimension_upload_id'), 'provider_dimension', ['upload_id'], unique=False)
     op.create_table('visit_dimension',
-    sa.Column('encounter_num', sa.INTEGER(), nullable=False),
-    sa.Column('patient_num', sa.INTEGER(), nullable=False),
+    sa.Column('encounter_num', sa.INTEGER(), autoincrement=False, nullable=False),
+    sa.Column('patient_num', sa.INTEGER(), autoincrement=False, nullable=False),
     sa.Column('active_status_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('start_date', sa.TIMESTAMP(), nullable=True),
     sa.Column('end_date', sa.TIMESTAMP(), nullable=True),
     sa.Column('inout_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('location_cd', sa.VARCHAR(length=50), nullable=True),
     sa.Column('location_path', sa.VARCHAR(length=900), nullable=True),
-    sa.Column('length_if_stay', sa.INTEGER(), nullable=True),
+    sa.Column('length_of_stay', sa.INTEGER(), nullable=True),
     sa.Column('visit_blob', sa.TEXT(), nullable=True),
     sa.Column('update_date', sa.TIMESTAMP(), nullable=True),
     sa.Column('download_date', sa.TIMESTAMP(), nullable=True),
@@ -163,18 +171,28 @@ def upgrade():
     sa.Column('upload_id', sa.INTEGER(), nullable=True),
     sa.PrimaryKeyConstraint('encounter_num', 'patient_num')
     )
+    op.create_index(op.f('ix_visit_dimension_upload_id'), 'visit_dimension', ['upload_id'], unique=False)
     # ### end Alembic commands ###
 
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_index(op.f('ix_visit_dimension_upload_id'), table_name='visit_dimension')
     op.drop_table('visit_dimension')
+    op.drop_index(op.f('ix_provider_dimension_upload_id'), table_name='provider_dimension')
     op.drop_table('provider_dimension')
     op.drop_table('patient_mapping')
+    op.drop_index(op.f('ix_patient_dimension_upload_id'), table_name='patient_dimension')
     op.drop_table('patient_dimension')
     op.drop_table('observation_fact')
+    op.drop_index(op.f('ix_modifier_dimension_upload_id'), table_name='modifier_dimension')
     op.drop_table('modifier_dimension')
+    op.drop_index(op.f('ix_encounter_mapping_upload_id'), table_name='encounter_mapping')
+    op.drop_index(op.f('ix_encounter_mapping_encounter_num'), table_name='encounter_mapping')
     op.drop_table('encounter_mapping')
+    op.drop_index(op.f('ix_concept_dimension_upload_id'), table_name='concept_dimension')
     op.drop_table('concept_dimension')
+    op.drop_index(op.f('ix_code_lookup_upload_id'), table_name='code_lookup')
+    op.drop_index(op.f('ix_code_lookup_name_char'), table_name='code_lookup')
     op.drop_table('code_lookup')
     # ### end Alembic commands ###

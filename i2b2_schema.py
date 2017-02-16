@@ -49,7 +49,7 @@ class ObservationFact(Base):
 class PatientDimension(Base):
     __tablename__ = 'patient_dimension'
 
-    patient_num = Column(INTEGER, primary_key=True)
+    patient_num = Column(INTEGER, primary_key=True, autoincrement=False)
     vital_status_cd = Column(VARCHAR(50))
     birth_date = Column(TIMESTAMP)
     death_date = Column(TIMESTAMP)
@@ -67,27 +67,27 @@ class PatientDimension(Base):
     download_date = Column(TIMESTAMP)
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
-    upload_id = Column(INTEGER)
+    upload_id = Column(INTEGER, index=True)
 
 
 class VisitDimension(Base):
     __tablename__ = 'visit_dimension'
 
-    encounter_num = Column(INTEGER, primary_key=True)
-    patient_num = Column(INTEGER, primary_key=True)
+    encounter_num = Column(INTEGER, primary_key=True, autoincrement=False)
+    patient_num = Column(INTEGER, primary_key=True, autoincrement=False)
     active_status_cd = Column(VARCHAR(50))
     start_date = Column(TIMESTAMP)
     end_date = Column(TIMESTAMP)
     inout_cd = Column(VARCHAR(50))
     location_cd = Column(VARCHAR(50))
     location_path = Column(VARCHAR(900))
-    length_if_stay = Column(INTEGER)
+    length_of_stay = Column(INTEGER)
     visit_blob = Column(TEXT)
     update_date = Column(TIMESTAMP)
     download_date = Column(TIMESTAMP)
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
-    upload_id = Column(INTEGER)
+    upload_id = Column(INTEGER, index=True)
 
 
 ########################################################################################################################
@@ -105,7 +105,7 @@ class ConceptDimension(Base):
     download_date = Column(TIMESTAMP)
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
-    upload_id = Column(INTEGER)
+    upload_id = Column(INTEGER, index=True)
 
 
 class ProviderDimension(Base):
@@ -119,7 +119,7 @@ class ProviderDimension(Base):
     download_date = Column(TIMESTAMP)
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
-    upload_id = Column(INTEGER)
+    upload_id = Column(INTEGER, index=True)
 
 
 class ModifierDimension(Base):
@@ -133,7 +133,7 @@ class ModifierDimension(Base):
     download_date = Column(TIMESTAMP)
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
-    upload_id = Column(INTEGER)
+    upload_id = Column(INTEGER, index=True)
 
 
 class CodeLookup(Base):
@@ -142,14 +142,14 @@ class CodeLookup(Base):
     table_cd = Column(VARCHAR(100), primary_key=True)
     column_cd = Column(VARCHAR(100), primary_key=True)
     code_cd = Column(VARCHAR(50), primary_key=True)
-    name_char = Column(VARCHAR(650))
+    name_char = Column(VARCHAR(650), index=True)
     lookup_blob = Column(TEXT)
     upload_date = Column(TIMESTAMP)
     update_date = Column(TIMESTAMP)
     download_date = Column(TIMESTAMP)
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
-    upload_id = Column(INTEGER)
+    upload_id = Column(INTEGER, index=True)
 
 
 ########################################################################################################################
@@ -178,7 +178,7 @@ class EncounterMapping(Base):
     encounter_ide = Column(VARCHAR(200), primary_key=True)
     encounter_ide_source = Column(VARCHAR(50), primary_key=True)
     project_id = Column(VARCHAR(50), primary_key=True)
-    encounter_num = Column(INTEGER, nullable=False)
+    encounter_num = Column(INTEGER, nullable=False, index=True)
     patient_ide = Column(VARCHAR(200), primary_key=True)
     patient_ide_source = Column(VARCHAR(50), primary_key=True)
     encounter_ide_status = Column(VARCHAR(50))
@@ -187,4 +187,4 @@ class EncounterMapping(Base):
     download_date = Column(TIMESTAMP)
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
-    upload_id = Column(INTEGER)
+    upload_id = Column(INTEGER, index=True)
