@@ -7,7 +7,7 @@ For more information, you can refer to this document:
 https://www.i2b2.org/software/files/PDF/current/CRC_Design.pdf
 """
 
-from sqlalchemy import Column, INTEGER, TEXT, DECIMAL, TIMESTAMP, VARCHAR, CHAR
+from sqlalchemy import Column, INTEGER, TEXT, DECIMAL, TIMESTAMP, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -27,12 +27,12 @@ class ObservationFact(Base):
     provider_id = Column(VARCHAR(50), primary_key=True)
     start_date = Column(TIMESTAMP, primary_key=True)
     patient_num = Column(INTEGER, primary_key=True)
-    modifier_cd = Column(CHAR(50), primary_key=True, server_default='@')
+    modifier_cd = Column(VARCHAR(50), primary_key=True, server_default='@')
     instance_num = Column(INTEGER, primary_key=True, server_default='1')
-    valtype_cd = Column(CHAR(50))
+    valtype_cd = Column(VARCHAR(50))
     tval_char = Column(VARCHAR(255))
     nval_num = Column(DECIMAL(18, 5))
-    valueflag_cd = Column(CHAR(50))
+    valueflag_cd = Column(VARCHAR(50))
     quantity_num = Column(DECIMAL(18, 5))
     units_cd = Column(VARCHAR(50))
     end_date = Column(TIMESTAMP)
@@ -53,7 +53,7 @@ class PatientDimension(Base):
     vital_status_cd = Column(VARCHAR(50))
     birth_date = Column(TIMESTAMP)
     death_date = Column(TIMESTAMP)
-    sex_cd = Column(CHAR(50))
+    sex_cd = Column(VARCHAR(50))
     age_in_years_num = Column(INTEGER)
     language_cd = Column(VARCHAR(50))
     race_cd = Column(VARCHAR(50))
@@ -125,8 +125,8 @@ class ProviderDimension(Base):
 class ModifierDimension(Base):
     __tablename__ = 'modifier_dimension'
 
-    concept_path = Column(VARCHAR(700), primary_key=True)
-    concept_cd = Column(VARCHAR(50))
+    modifier_path = Column(VARCHAR(700), primary_key=True)
+    modifier_cd = Column(VARCHAR(50))
     name_char = Column(VARCHAR(2000))
     modifier_blob = Column(TEXT)
     update_date = Column(TIMESTAMP)
