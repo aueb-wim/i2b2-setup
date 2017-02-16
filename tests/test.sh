@@ -17,4 +17,4 @@ if [ -z "$CIRCLECI" ] || [ "$CIRCLECI" = false ] ; then
     docker rm -f ${postgres_container}
 fi
 
-exit $ret
+exit "$ret"
