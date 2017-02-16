@@ -7,7 +7,7 @@ For more information, you can refer to this document:
 https://www.i2b2.org/software/files/PDF/current/CRC_Design.pdf
 """
 
-from sqlalchemy import Column, INTEGER, TEXT, DECIMAL, TIMESTAMP, VARCHAR
+from sqlalchemy import Column, Index, Sequence, INTEGER, TEXT, DECIMAL, TIMESTAMP, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -22,12 +22,12 @@ metadata = Base.metadata
 class ObservationFact(Base):
     __tablename__ = 'observation_fact'
 
-    encounter_num = Column(INTEGER, primary_key=True)
-    concept_cd = Column(VARCHAR(50), primary_key=True)
+    encounter_num = Column(INTEGER, primary_key=True, autoincrement=False)
+    patient_num = Column(INTEGER, primary_key=True, autoincrement=False)
+    concept_cd = Column(VARCHAR(50), primary_key=True, index=True)
     provider_id = Column(VARCHAR(50), primary_key=True)
     start_date = Column(TIMESTAMP, primary_key=True)
-    patient_num = Column(INTEGER, primary_key=True)
-    modifier_cd = Column(VARCHAR(50), primary_key=True, server_default='@')
+    modifier_cd = Column(VARCHAR(100), primary_key=True, server_default='@', index=True)
     instance_num = Column(INTEGER, primary_key=True, server_default='1')
     valtype_cd = Column(VARCHAR(50))
     tval_char = Column(VARCHAR(255))
@@ -42,8 +42,14 @@ class ObservationFact(Base):
     update_date = Column(TIMESTAMP)
     download_date = Column(TIMESTAMP)
     import_date = Column(TIMESTAMP)
-    sourcesystem_cd = Column(VARCHAR(50))
-    upload_id = Column(INTEGER)
+    sourcesystem_cd = Column(VARCHAR(50), index=True)
+    upload_id = Column(INTEGER, index=True)
+    text_search_index = Column(INTEGER, unique=True, nullable=False)
+    of_idx_allobservation_fact = Index("of_idx_allobservation_fact", patient_num, encounter_num, concept_cd, start_date,
+                                       provider_id, modifier_cd, instance_num, valtype_cd, tval_char, nval_num,
+                                       valueflag_cd, quantity_num, units_cd, end_date, location_cd, confidence_num)
+    of_idx_encounter_patient = Index("of_idx_encounter_patient", encounter_num, patient_num, instance_num)
+    of_idx_start_date = Index("of_idx_start_date", start_date, patient_num)
 
 
 class PatientDimension(Base):
@@ -68,6 +74,11 @@ class PatientDimension(Base):
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
     upload_id = Column(INTEGER, index=True)
+    pd_idx_allpatientdim = Index("pd_idx_allpatientdim", patient_num, vital_status_cd, birth_date, death_date, sex_cd,
+                                 age_in_years_num, language_cd, race_cd, marital_status_cd, income_cd, religion_cd,
+                                 zip_cd)
+    pd_idx_dates = Index("pd_idx_dates", patient_num, vital_status_cd, birth_date, death_date)
+    pd_idx_statecityzip = Index("pd_idx_statecityzip", statecityzip_path, patient_num)
 
 
 class VisitDimension(Base):
@@ -88,6 +99,9 @@ class VisitDimension(Base):
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
     upload_id = Column(INTEGER, index=True)
+    vd_idx_allvisitdim = Index("vd_idx_allvisitdim", encounter_num, patient_num, inout_cd, location_cd, start_date,
+                               length_of_stay, end_date)
+    vd_idx_dates = Index("vd_idx_dates", encounter_num, start_date, end_date)
 
 
 ########################################################################################################################
@@ -120,6 +134,7 @@ class ProviderDimension(Base):
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
     upload_id = Column(INTEGER, index=True)
+    pd_idx_name_char = Index("pd_idx_name_char", provider_id, name_char)
 
 
 class ModifierDimension(Base):
@@ -188,3 +203,5 @@ class EncounterMapping(Base):
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
     upload_id = Column(INTEGER, index=True)
+    em_idx_encpath = Index("em_idx_encpath", encounter_ide, encounter_ide_source, patient_ide, patient_ide_source,
+                           encounter_num)
