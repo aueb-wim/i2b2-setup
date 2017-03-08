@@ -86,6 +86,7 @@ class VisitDimension(Base):
 
     encounter_num = Column(INTEGER, primary_key=True, autoincrement=False)
     patient_num = Column(INTEGER, primary_key=True, autoincrement=False)
+    patient_age = Column(DECIMAL)
     active_status_cd = Column(VARCHAR(50))
     start_date = Column(TIMESTAMP)
     end_date = Column(TIMESTAMP)
