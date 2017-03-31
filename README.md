@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/LREN-CHUV/i2b2-setup.svg?style=svg)](https://circleci.com/gh/LREN-CHUV/i2b2-setup)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b26a4201f7704c54a1aefbd823cf37ab)](https://www.codacy.com/app/mirco-nasuti/i2b2-setup?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LREN-CHUV/i2b2-setup&amp;utm_campaign=Badge_Grade)
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/LREN-CHUV/i2b2-setup/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/LREN-CHUV/i2b2-setup/blob/master/LICENSE) [![CHUV](https://img.shields.io/badge/CHUV-LREN-AF4C64.svg)](https://www.unil.ch/lren/en/home.html)
 
 # I2B2 SETUP
 
@@ -10,7 +10,7 @@ The goal of this project is to provide a Docker container including Alembic and 
 
 ## Usage
 
-Example: 
+Example:
 `docker run --rm -e "DB_URL=postgresql://postgres:postgres@localhost:5432/postgres" hbpmip/i2b2-setup upgrade head`
 
 ## Build
