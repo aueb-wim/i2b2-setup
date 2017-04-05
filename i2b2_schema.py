@@ -44,12 +44,13 @@ class ObservationFact(Base):
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50), index=True)
     upload_id = Column(INTEGER, index=True)
-    text_search_index = Column(INTEGER, unique=True, nullable=False)
+    text_search_index = Column(INTEGER, primary_key=True)
     of_idx_allobservation_fact = Index("of_idx_allobservation_fact", patient_num, encounter_num, concept_cd, start_date,
                                        provider_id, modifier_cd, instance_num, valtype_cd, tval_char, nval_num,
                                        valueflag_cd, quantity_num, units_cd, end_date, location_cd, confidence_num)
     of_idx_encounter_patient = Index("of_idx_encounter_patient", encounter_num, patient_num, instance_num)
     of_idx_start_date = Index("of_idx_start_date", start_date, patient_num)
+    of_text_search_unique = Index("of_text_search_unique", text_search_index)
 
 
 class PatientDimension(Base):
