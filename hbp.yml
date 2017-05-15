@@ -1,0 +1,84 @@
+description: "This library provides functions to import data into an I2B2 DB schema"
+
+long_description: |
+  This library provides functions to import data into an I2B2 DB schema.
+
+
+authors:
+  - author: Mirco Nasuti
+    author_email:
+      - mirco.nasuti@chuv.ch
+    organisation: LREN-CHUV
+    organisation_badge: https://img.shields.io/badge/CHUV-LREN-AF4C64.svg
+
+platform: MIP
+component:
+  mip_building_block: data-factory
+  nature: tool
+
+license:
+  name: Apache 2.0
+  badge: https://img.shields.io/badge/license-Apache--2.0-blue.svg
+  url: https://github.com/LREN-CHUV/i2b2-setup/blob/master/LICENSE
+
+code_repositories:
+  - name: chuv-gitlab
+    visibility: private
+    url: https://___.chuv.ch/data-factory/i2b2-setup/
+    git_clone: https://___.chuv.ch/data-factory/i2b2-setup.git
+  - name: github/LREN-CHUV
+    visibility: public
+    url: https://github.io/LREN-CHUV/i2b2-setup/
+    git_clone: https://github.io/LREN-CHUV/i2b2-setup.git
+  - name: github/HBPMedical
+    visibility: public
+    url: https://github.io/HBPMedical/i2b2-setup/
+    git_clone: https://github.io/HBPMedical/i2b2-setup.git
+
+code_quality_checks:
+  codacy:
+    badge: https://api.codacy.com/project/badge/Grade/
+    url: "https://www.codacy.com/app/hbp-mip/i2b2-setup?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LREN-CHUV/i2b2-setup&amp;utm_campaign=Badge_Grade"
+
+testing:
+  unit_testing:
+    - sources: /tests
+    - command: /tests/tesh.sh
+
+release_management:
+  current_version: 1.4.6
+  current_code_release: https://github.com/HBPMedical/i2b2-setup/archive/1.4.6.zip
+  current_docker_release: docker pull hbpmip/i2b2-setup:1.4.6
+  release_script: 'publish.sh'
+
+continuous_integration:
+  - name: CircleCI
+    description: "Check style and execute unit tests"
+    url: https://circleci.com/gh/LREN-CHUV/i2b2-setup
+    badge: https://circleci.com/gh/LREN-CHUV/i2b2-setup.svg?style=svg
+    actions:
+      - code_style
+      - unit_tests
+
+distribution:
+  docker_hub:
+    name: hbpmip/i2b2-setup
+    current_tag: 1.4.6
+    url: https://hub.docker.com/r/hbpmip/i2b2-setup/
+    badge: https://img.shields.io/badge/docker-hbpmip%2Fi2b2--setup-008bb8.svg
+    command: docker pull hbpmip/i2b2-setup:2.1.2
+
+planning:
+  github:
+    name: Issues on Github
+    url: https://github.com/LREN-CHUV/i2b2-setup/issues
+
+related_projects:
+  - name: docker-alembic
+    mip_building_block: infrastructure
+    relationship: depends-on-other
+    relationship_scope: build
+  - name: i2b2-import
+    mip_building_block: data-factory
+    relationship: other-depends-on
+    relationship_scope: runtime

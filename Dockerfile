@@ -1,24 +1,10 @@
-FROM python:3.6.0
+FROM hbpmip/alembic:0.9.1-0
 
 MAINTAINER mirco.nasuti@chuv.ch
 
-
-########################################################################################################################
-# Install Alembic and Psycopg2
-########################################################################################################################
-
-RUN pip install --no-cache-dir alembic==0.8.10 psycopg2==2.6.2
-
-
-########################################################################################################################
-# Install Dockerize
-########################################################################################################################
-
-ENV DOCKERIZE_VERSION 'v0.3.0'
-RUN wget "https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz" \
-    && tar -C "/usr/local/bin" -xzvf "dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz" \
-    && rm "dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz"
-
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
 
 ########################################################################################################################
 # Copy project files
@@ -36,3 +22,16 @@ COPY db_migrations/ /db_migrations/
 WORKDIR /
 ENTRYPOINT ["dockerize", "-template", "/alembic.ini.tmpl:/alembic.ini", "alembic"]
 CMD ["help"]
+
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="hbpmip/i2b2-setup" \
+      org.label-schema.description="I2B2 database setup" \
+      org.label-schema.url="https://github.com/LREN-CHUV/i2b2-setup" \
+      org.label-schema.vcs-type="git" \
+      org.label-schema.vcs-url="https://github.com/LREN-CHUV/i2b2-setup" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.version="$VERSION" \
+      org.label-schema.vendor="LREN CHUV" \
+      org.label-schema.license="Apache2.0" \
+      org.label-schema.docker.dockerfile="Dockerfile" \
+      org.label-schema.schema-version="1.0"

@@ -1,6 +1,4 @@
-[![CircleCI](https://circleci.com/gh/LREN-CHUV/i2b2-setup.svg?style=svg)](https://circleci.com/gh/LREN-CHUV/i2b2-setup)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/365ece9e92c042568a1f68e6650ff6b9)](https://www.codacy.com/app/hbp-mip/i2b2-setup?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LREN-CHUV/i2b2-setup&amp;utm_campaign=Badge_Grade)
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/LREN-CHUV/i2b2-setup/blob/master/LICENSE) [![CHUV](https://img.shields.io/badge/CHUV-LREN-AF4C64.svg)](https://www.unil.ch/lren/en/home.html)
+[![CHUV](https://img.shields.io/badge/CHUV-LREN-AF4C64.svg)](https://www.unil.ch/lren/en/home.html) [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/LREN-CHUV/i2b2-setup/blob/master/LICENSE) [![DockerHub](https://img.shields.io/badge/docker-hbpmip%2Fi2b2--setup-008bb8.svg)](https://hub.docker.com/r/hbpmip/i2b2-setup/) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/365ece9e92c042568a1f68e6650ff6b9)](https://www.codacy.com/app/hbp-mip/i2b2-setup?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LREN-CHUV/i2b2-setup&amp;utm_campaign=Badge_Grade) [![CircleCI](https://circleci.com/gh/LREN-CHUV/i2b2-setup.svg?style=svg)](https://circleci.com/gh/LREN-CHUV/i2b2-setup)
 
 # I2B2 setup
 
@@ -19,7 +17,7 @@ We use an I2B2 database twice in the Data Factory:
 
 Example:
 
-`docker run --rm -e "DB_URL=postgresql://postgres:postgres@localhost:5432/postgres" hbpmip/i2b2-setup upgrade head`
+`docker run --rm -e "DB_URL=postgresql://postgres:postgres@localhost:5432/postgres" hbpmip/i2b2-setup:1.4.6 upgrade head`
 
 ## Build
 
@@ -29,6 +27,22 @@ Run: `./build.sh`
 
 Run: `cd tests && ./test.sh`
 
-## Push on Docker Hub
+## Publish on Docker Hub
 
-Run: `./docker_push.sh`
+Run: `./publish.sh`
+
+## License
+
+Copyright (C) 2010-2017 [LREN CHUV](https://www.unil.ch/lren/en/home.html)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

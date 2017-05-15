@@ -14,11 +14,23 @@ from alembic.config import Config
 
 config = Config(PROJECT_FOLDER+"/alembic.ini")
 sys.path.append(PROJECT_FOLDER)
+
 from i2b2_schema import Base
 
+# Interpret the config file for Python logging.
+# This line sets up loggers basically.
 fileConfig(config.config_file_name)
 
+# add your model's MetaData object here
+# for 'autogenerate' support
+# from myapp import mymodel
+# target_metadata = mymodel.Base.metadata
 target_metadata = Base.metadata
+
+# other values from the config, defined by the needs of env.py,
+# can be acquired:
+# my_important_option = config.get_main_option("my_important_option")
+# ... etc.
 
 
 def run_migrations_offline():
