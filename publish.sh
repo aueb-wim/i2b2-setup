@@ -101,7 +101,7 @@ BUILD_DATE=$(date -Iseconds) \
   VCS_REF=$updated_version \
   VERSION=$updated_version \
   WORKSPACE=$WORKSPACE \
-  $CAPTAIN push i2b2_db_setup --branch-tags=false --commit-tags=false --tag $updated_version
+  $CAPTAIN push i2b2_setup --branch-tags=false --commit-tags=false --tag $updated_version
 
 # Notify on slack
 sed "s/USER/${USER^}/" $WORKSPACE/slack.json > $WORKSPACE/.slack.json
