@@ -17,7 +17,7 @@ We use an I2B2 database twice in the Data Factory:
 
 Example:
 
-`docker run --rm -e "DB_URL=postgresql://postgres:postgres@localhost:5432/postgres" hbpmip/i2b2-setup:1.4.7 upgrade head`
+`docker run --rm -e "DB_URL=postgresql://postgres:postgres@localhost:5432/postgres" hbpmip/i2b2-setup:1.4.8 upgrade head`
 
 ## Build
 
