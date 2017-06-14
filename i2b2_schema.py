@@ -7,7 +7,7 @@ For more information, you can refer to this document:
 https://www.i2b2.org/software/files/PDF/current/CRC_Design.pdf
 """
 
-from sqlalchemy import Column, Index, INTEGER, TEXT, DECIMAL, TIMESTAMP, VARCHAR
+from sqlalchemy import Column, Index, Sequence, INTEGER, TEXT, DECIMAL, TIMESTAMP, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -176,9 +176,11 @@ class CodeLookup(Base):
 class PatientMapping(Base):
     __tablename__ = 'patient_mapping'
 
+    patient_num_seq = Sequence('patient_num_seq')
+
     patient_ide = Column(VARCHAR(200), primary_key=True)
     patient_ide_source = Column(VARCHAR(50), primary_key=True)
-    patient_num = Column(INTEGER, unique=True)
+    patient_num = Column(INTEGER, server_default=patient_num_seq.next_value())
     patient_ide_status = Column(VARCHAR(50))
     project_id = Column(VARCHAR(50), primary_key=True)
     upload_date = Column(TIMESTAMP)
@@ -192,10 +194,12 @@ class PatientMapping(Base):
 class EncounterMapping(Base):
     __tablename__ = 'encounter_mapping'
 
+    encounter_num_seq = Sequence('encounter_num_seq')
+
     encounter_ide = Column(VARCHAR(200), primary_key=True)
     encounter_ide_source = Column(VARCHAR(50), primary_key=True)
     project_id = Column(VARCHAR(50), primary_key=True)
-    encounter_num = Column(INTEGER, nullable=False, index=True)
+    encounter_num = Column(INTEGER, server_default=encounter_num_seq.next_value())
     patient_ide = Column(VARCHAR(200), primary_key=True)
     patient_ide_source = Column(VARCHAR(50), primary_key=True)
     encounter_ide_status = Column(VARCHAR(50))
@@ -205,5 +209,3 @@ class EncounterMapping(Base):
     import_date = Column(TIMESTAMP)
     sourcesystem_cd = Column(VARCHAR(50))
     upload_id = Column(INTEGER, index=True)
-    em_idx_encpath = Index("em_idx_encpath", encounter_ide, encounter_ide_source, patient_ide, patient_ide_source,
-                           encounter_num)
