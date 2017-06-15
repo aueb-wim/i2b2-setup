@@ -22,11 +22,14 @@ depends_on = None
 def create_seq(name):
     op.execute(sa.schema.CreateSequence(sa.Sequence(name)))
 
-create_seq('patient_num_seq')
-create_seq('encounter_num_seq')
+
+def drop_seq(name):
+    op.execute(sa.schema.DropSequence(name))
 
 
 def upgrade():
+    create_seq('patient_num_seq')
+    create_seq('encounter_num_seq')
     op.alter_column("encounter_mapping", "encounter_num",
                     nullable=False, server_default=sa.text("nextval('encounter_num_seq'::regclass)"))
     op.alter_column("patient_mapping", "patient_num",
@@ -38,3 +41,5 @@ def downgrade():
                     nullable=True, server_default=None)
     op.alter_column("patient_mapping", "patient_num",
                     nullable=True, server_default=None)
+    drop_seq('patient_num_seq')
+    drop_seq('encounter_num_seq')
