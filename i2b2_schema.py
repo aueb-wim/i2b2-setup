@@ -24,7 +24,7 @@ class ObservationFact(Base):
 
     encounter_num = Column(INTEGER, primary_key=True, autoincrement=False)
     patient_num = Column(INTEGER, primary_key=True, autoincrement=False)
-    concept_cd = Column(VARCHAR(50), primary_key=True, index=True)
+    concept_cd = Column(VARCHAR(100), primary_key=True, index=True)
     provider_id = Column(VARCHAR(50), primary_key=True)
     start_date = Column(TIMESTAMP, primary_key=True)
     modifier_cd = Column(VARCHAR(100), primary_key=True, server_default='@', index=True)
@@ -114,7 +114,7 @@ class ConceptDimension(Base):
     __tablename__ = 'concept_dimension'
 
     concept_path = Column(VARCHAR(700), primary_key=True)
-    concept_cd = Column(VARCHAR(50))
+    concept_cd = Column(VARCHAR(100))
     name_char = Column(VARCHAR(2000))
     concept_blob = Column(TEXT)
     update_date = Column(TIMESTAMP)
