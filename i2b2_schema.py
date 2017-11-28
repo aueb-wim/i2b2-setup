@@ -180,7 +180,7 @@ class PatientMapping(Base):
 
     patient_ide = Column(VARCHAR(200), primary_key=True)
     patient_ide_source = Column(VARCHAR(50), primary_key=True)
-    patient_num = Column(INTEGER, server_default=patient_num_seq.next_value())
+    patient_num = Column(INTEGER, server_default=patient_num_seq.next_value(), nullable=False)
     patient_ide_status = Column(VARCHAR(50))
     project_id = Column(VARCHAR(50), primary_key=True)
     upload_date = Column(TIMESTAMP)
@@ -199,7 +199,7 @@ class EncounterMapping(Base):
     encounter_ide = Column(VARCHAR(200), primary_key=True)
     encounter_ide_source = Column(VARCHAR(50), primary_key=True)
     project_id = Column(VARCHAR(50), primary_key=True)
-    encounter_num = Column(INTEGER, server_default=encounter_num_seq.next_value())
+    encounter_num = Column(INTEGER, server_default=encounter_num_seq.next_value(), nullable=False)
     patient_ide = Column(VARCHAR(200), primary_key=True)
     patient_ide_source = Column(VARCHAR(50), primary_key=True)
     encounter_ide_status = Column(VARCHAR(50))
