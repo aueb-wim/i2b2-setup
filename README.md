@@ -2,22 +2,11 @@
 
 # I2B2 setup
 
-Migration scripts for an I2B2 database.
+Migration scripts for setting up a simplified version of the I2B2 database.
 
 ## Introduction
 
-The goal of this project is to provide a Docker container including Alembic and a Python model of the I2B2 schema.
-
-We use an I2B2 database twice in the Data Factory:
-
-* I2B2 capture database: this database is used to capture as much as possible information from hospitals or research datasets, even if we do not understand it or know yet how to use it in MIP. Information in this database will be transformed and normalised into the I2B2 CDE database each time the MIP CDE (Common Data Elements) evolve or the mapping for the source data to the normalised CDE data needs adjustment.
-* I2B2 CDE database: this database contains the variables selected by the Data Governance and Data Selection committee, in a normalised form in order to ensure a consistent representation of data across sites. Data in this database is then exported into the LDSM database, using a structure facilitating its use by Queries and the Algorithms.
-
-## Usage
-
-Example:
-
-`docker run --rm -e "DB_URL=postgresql://postgres:postgres@localhost:5432/postgres" hbpmip/i2b2-setup:1.5.2 upgrade head`
+Data Factory is a data management, quality control and data integration toolkit for curating data in order to be imported in the Medical Informatics Platform. In Data Factory, we use a database with a simplified -according to our needs- version of the original I2B2 schema so as to store and harmonize clinical data.
 
 ## Build
 
@@ -26,10 +15,6 @@ Run: `./build.sh`
 ## Test
 
 Run: `cd tests && ./test.sh`
-
-## Publish on Docker Hub
-
-Run: `./publish.sh`
 
 ## License
 
