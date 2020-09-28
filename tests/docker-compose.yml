@@ -19,7 +19,9 @@ services:
 
   # Use the latest image built as this is what is under test
   i2b2_setup:
-    image: "hbpmip/i2b2-setup:latest"
+    build:
+      context: ..
+      dockerfile: Dockerfile
     container_name: "i2b2-setup"
     command: "upgrade head"
     environment:

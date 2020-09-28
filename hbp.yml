@@ -4,13 +4,6 @@ long_description: |
   This library provides functions to import data into an I2B2 DB schema.
 
 
-authors:
-  - author: Mirco Nasuti
-    author_email:
-      - mirco.nasuti@chuv.ch
-    organisation: LREN-CHUV
-    organisation_badge: https://img.shields.io/badge/CHUV-LREN-AF4C64.svg
-
 platform: MIP
 component:
   mip_building_block: data-factory

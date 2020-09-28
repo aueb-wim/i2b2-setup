@@ -1,9 +1,9 @@
 target_image:
   build: Dockerfile
-  image: hbpmip/i2b2-setup
+  image: hbpmip/simple-i2b2-setup
   pre:
-    - echo "Building hbpmip/i2b2-setup image"
+    - echo "Building hbpmip/simple-i2b2-setup image"
   post:
-    - echo "Finished building hbpmip/i2b2-setup image"
+    - echo "Finished building hbpmip/simple-i2b2-setup image"
   test:
     - ./tests/test.sh
